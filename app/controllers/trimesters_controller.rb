@@ -1,7 +1,7 @@
 class TrimestersController < ApplicationController
 
   def index
-    # feting trimester data from the db
+    # fetching trimester data from the db
     @trimesters = Trimester.all
 
   end

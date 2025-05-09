@@ -1,6 +1,22 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @course %>
+<h1><%= @course.coding_class.title %></h1>
+<p><strong>Course Term:<strong><%= @course.trimester.term %> - <%= @course.trimester.year %></p>
+
+<h2>Enrolled Students</h2>
+<ul>
+  <% @course.students.each do |student| %>
+    <li><%= student.first_name %> <%= student.last_name %>  </li>
+  <% end %>
+</ul>
+
+<ul>
+  <% @course.enrollments.each do |enrollment| %>
+    <li><%= enrollment.student.first_name %><%= enrollment.student.last_name %>  </li>
+  <% end %>
+</ul>
+
+# <%= render @course %>
 
 <div>
   <%= link_to "Edit this course", edit_course_path(@course) %> |

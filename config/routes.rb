@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :lessons
   resources :courses
   resources :coding_classes
+  resources :courses, only: [:show] do
+    resources :students, only: [:index]
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get "/trimesters", to: "trimesters#index"
@@ -15,6 +18,10 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "/trimesters/:id", to: "trimesters#show"
+
+  get "/dashboard", to: "admin_dashboard#index"
+
+
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
