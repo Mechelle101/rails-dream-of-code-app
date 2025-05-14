@@ -3,6 +3,8 @@ class Course < ApplicationRecord
   belongs_to :trimester
   has_many :enrollments
   has_many :students, through: :enrollments #is this needed for accessing the students? i'll test it.
+  has_many :lessons
+  has_many :submissions, through: :lessons
 
   delegate :title, to: :coding_class
 
@@ -22,5 +24,4 @@ class Course < ApplicationRecord
     end
   email_list
   end
-
 end

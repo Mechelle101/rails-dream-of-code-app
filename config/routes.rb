@@ -4,24 +4,25 @@ Rails.application.routes.draw do
   resources :enrollments
   resources :mentor_enrollment_assignments
   resources :lessons
+  # I am wondering if this is not needed because I have that below?
   resources :courses
   resources :coding_classes
   resources :courses, only: [:show] do
     resources :students, only: [:index]
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :courses do
+    resources :submissions, only: [:new, :create]
+  end
+  resources :trimesters, only: [:edit, :update]
 
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "/trimesters", to: "trimesters#index"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
-
   get "/trimesters/:id", to: "trimesters#show"
-
   get "/dashboard", to: "admin_dashboard#index"
-
-
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

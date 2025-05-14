@@ -1,0 +1,21 @@
+<h1>Edit Application Deadline</h1>
+
+<%= form_with(model: @trimester, local: true) do |f| %>
+  <% if @trimester.errors.any? %>
+    <div style="color: green">
+      <h2><%= pluralize(@trimester.errors.count, "errors") %> prohibited this trimester from being saved:</h2>
+      <ul>
+        <% @trimester.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :application_deadline %>
+    <%= f.date_field :application_deadline, class: 'form-control' %>
+  </div>
+
+  <%= f.submit "Update Deadline", class: 'btn btn-primary' %>
+<% end %>

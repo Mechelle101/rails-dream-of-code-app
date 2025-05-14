@@ -1,4 +1,4 @@
-require 'rails_helper' 
+require 'rails_helper'
 
 RSpec.describe 'Courses', type: :request do
   describe 'GET /courses/:id' do
@@ -43,5 +43,3 @@ RSpec.describe 'Courses', type: :request do
     end
   end
 end
-
-
