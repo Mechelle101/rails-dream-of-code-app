@@ -1,5 +1,4 @@
-# this is the join table for lessons and topics
 class LessonsTopic < ApplicationRecord
-  belongs_to :lesson
-  belongs_to :topic
+  belongs_to :lesson, inverse_of: :lessons_topics
+  belongs_to :topic, inverse_of: :lessons_topics
 end
