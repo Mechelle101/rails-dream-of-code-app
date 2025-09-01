@@ -19,11 +19,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
-  # when GET hits /trimester run TrimesterController#index
-  get "/trimesters", to: "trimesters#index"
-  get "/trimesters/:id", to: "trimesters#show"
-  # when GET hits /mentor run MentorController#index
-  get "/mentors", to: "mentors#index"
-  get "/mentors/:id", to: "mentors#show"
-
+  # when GET hits /trimesters run TrimesterController#index
+  resources :trimesters, only: [:index, :show]
+  
+  # when GET hits /mentors run MentorController#index
+  resources :mentors, only: [:index, :show]
 end

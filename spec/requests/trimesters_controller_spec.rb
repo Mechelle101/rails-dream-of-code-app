@@ -27,7 +27,7 @@ RSpec.describe "Trimesters", type: :request do
       it "shows the title and no list items" do
         get "/trimesters"
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include("h1>Trimesters</h1>")
+        expect(response.body).to include("<h1>Trimesters</h1>")
         expect(response.body).not_to include("<li>")
       end
     end

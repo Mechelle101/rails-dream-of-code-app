@@ -61,8 +61,7 @@ RSpec.describe "Mentors", type: :request do
 
       context "when a mentor does not exist" do
         it "raises ActiveRecord::RecordNotFound" do
-          get "/mentors/999999" 
-          expect(response).to have_http_status(:not_found)
+          expect{get "/mentors/999999"}.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
