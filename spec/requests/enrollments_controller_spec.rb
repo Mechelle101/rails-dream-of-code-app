@@ -83,4 +83,3 @@ RSpec.describe "Api::V1::Enrollments", type: :request, skip: true do
     end
   end
 end
-

@@ -63,7 +63,6 @@ RSpec.describe Course, type: :model do
     context 'when there are students enrolled in the course' do
       # Now we do have additional data to set up. We need
       # students enrolled in the test course defined above.
-      #
       # Create some test student records
       let!(:enrolled_student_1) {
         Student.create!(
@@ -149,4 +148,3 @@ RSpec.describe Course, type: :model do
     end
   end
 end
-
