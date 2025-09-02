@@ -8,6 +8,13 @@ class CoursesController < ApplicationController
 
   # GET /courses/1 or /courses/1.json
   def show
+    @course = Course.find(params[:id])
+    
+    t = @course.trimester
+    today = Date.today
+    is_current = t.start_date <= today && t.end_date >= today
+
+    @students = is_current ? @course.students : []
   end
 
   # GET /courses/new
@@ -55,5 +62,11 @@ class CoursesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def course_params
       params.expect(course: [ :coding_class_id, :trimester_id, :max_enrollment ])
+    end
+
+    def current_course?(course)
+      t = course.trimester
+      today = Date.today
+      t.start_date <= today && t.end_date >= today
     end
 end

@@ -1,10 +1,14 @@
-<p style="color: green"><%= notice %></p>
 
-<%= render @course %>
+<h1><%= @course.coding_class.title %></h1>
+<p><strong>Trimester: </strong><%= "#{@course.trimester.term} - #{@course.trimester.year}" %></p>
 
-<div>
-  <%= link_to "Edit this course", edit_course_path(@course) %> |
-  <%= link_to "Back to courses", courses_path %>
-
-  <%= button_to "Destroy this course", @course, method: :delete %>
-</div>
+<h2>Enrolled Students</h2>
+<% if @students.any? %>
+  <ul>
+    <% @students.each do |s| %>
+      <li><%= "#{s.first_name} #{s.last_name}" %></li>
+      <% end %>
+  </ul>
+<% else %>
+    <p>No enrolled students yet.</p>
+<% end %>
