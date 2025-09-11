@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# look at this later. "Api::V1::Courses" I removed these folders. 
 RSpec.describe "Api::V1::Courses", type: :request, skip: true do
   # Set up current, past and future trimesters and courses for each
   let!(:current_trimester) {

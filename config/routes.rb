@@ -24,4 +24,9 @@ Rails.application.routes.draw do
   
   # when GET hits /mentors run MentorController#index
   resources :mentors, only: [:index, :show]
+
+  # when visiting /dashboard call the AdminDashboardController
+  get "/dashboard", to: "admin_dashboard#index"
+
+  resources :courses, only: [:show]
 end
