@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
+  # core resources used in the app
   resources :students
   resources :mentors
   resources :enrollments
   resources :mentor_enrollment_assignments
   resources :lessons
-  resources :courses
   resources :coding_classes
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -20,7 +20,8 @@ Rails.application.routes.draw do
   root "home#index"
 
   # when GET hits /trimesters run TrimesterController#index
-  resources :trimesters, only: [:index, :show]
+  resources :trimesters, only: [:index, :show, :edit, :update]
+  put "/trimester/:id", to: "trimesters#update", as: :update_trimester
   
   # when GET hits /mentors run MentorController#index
   resources :mentors, only: [:index, :show]
@@ -28,5 +29,8 @@ Rails.application.routes.draw do
   # when visiting /dashboard call the AdminDashboardController
   get "/dashboard", to: "admin_dashboard#index"
 
-  resources :courses, only: [:show]
+  resources :courses do 
+    # nested submissions
+    resources :submissions, only: [:new, :create]
+  end
 end

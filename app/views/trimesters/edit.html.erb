@@ -1,0 +1,12 @@
+<h1>Edit Trimester</h1>
+
+<%= form_with model: @trimester, url: update_trimester_path(@trimester), method: :put, local: true do |f| %>
+  <p><strong>Term/Year:</strong> <%= @trimester.term %> <%= @trimester.year %></p>
+
+  <div>
+    <%= f.label :application_deadline, "Application deadline" %><br>
+    <%= f.date_field :application_deadline %>
+  </div>
+
+  <%= f.submit "Save" %>
+<% end %>
