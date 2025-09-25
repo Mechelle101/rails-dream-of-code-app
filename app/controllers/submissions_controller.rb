@@ -1,22 +1,29 @@
 class SubmissionsController < ApplicationController
-  # GET /submissions/new
+  # GET /courses/:course_id/submissions/new
   def new
     @course = Course.find(params[:course_id])
     @submission = Submission.new
-    @enrollments # TODO: What set of enrollments should be listed in the dropdown?
-    @lessons # TODO: What set of lessons should be listed in the dropdown?
+    # only students enrolled in this course
+    @enrollments = @course.enrollments.includes(:student).references(:student)
+    @students = @enrollments.map(&:student)
+    
+    @lessons = Lesson.where(course_id: @course.id)
   end
 
+  # POST /courses/:course_id/submissions
   def create
     @course = Course.find(params[:course_id])
     @submission = Submission.new(submission_params)
 
+    # rebuild the dropdown menu if needing to rerender the form
+    @enrollments = @course.enrollments.includes(:student).references(:student)
+    @students = @enrollments.map(&:student)
+    @lessons = Lesson.where(course_id: @course.id)
+
     if @submission.save
       redirect_to course_path(@course), notice: 'Submission was successfully created.'
     else
-      @enrollments # TODO: Set this up just as in the new action
-      @lessons # TODO: Set this up just as in the new action
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

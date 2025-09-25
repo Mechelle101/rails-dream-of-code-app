@@ -10,15 +10,19 @@
       </ul>
     </div>
   <% end %>
-
+  
   <div>
-    <%= form.label :coding_class_id, style: "display: block" %>
-    <%= form.text_field :coding_class_id %>
+    <%= form.label :coding_class_id, "Coding Class", style: "display: block" %>
+    <%= form.collection_select( :coding_class_id, 
+        CodingClass.all, :id, :title, 
+        { prompt: "Select a Course" }, {} )  %>
   </div>
 
   <div>
-    <%= form.label :trimester_id, style: "display: block" %>
-    <%= form.text_field :trimester_id %>
+    <%= form.label :trimester_id, "Trimester", style: "display: block" %>
+    <%= form.collection_select( :trimester_id,
+        Trimester.all, :id, :display_name,
+        { prompt: "Select a Trimester" }, {} ) %>
   </div>
 
   <div>

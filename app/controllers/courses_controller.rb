@@ -4,12 +4,12 @@ class CoursesController < ApplicationController
 
   # GET /courses or /courses.json
   def index
-    @courses = Course.all
+    @courses = Course.includes(:coding_class, :trimester)
   end
 
   # find the course by id, if in the current trimester load students
   def show
-    @course = Course.find(params[:id])
+    # @course = Course.find(params[:id])
     @students = current_course?(@course) ? @course.students : []
   end
 
@@ -24,47 +24,49 @@ class CoursesController < ApplicationController
 
   # POST /courses or /courses.json
   def create
-  end
+    @course = Course.new(course_params)
+
+      if @course.save
+        # redirects to the new courses show page
+        redirect_to @course, notice: "The course was successfully created."
+      else
+        # rerender the new form with the error
+        render :new, status: :unprocessable_entity
+      end
+    end
 
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
-    respond_to do |format|
-      if @course.update(course_params)
-        format.html { redirect_to @course, notice: "Course was successfully updated." }
-        format.json { render :show, status: :ok, location: @course }
+    if @course.update(course_params)
+      redirect_to @course, notice: "Course was successfully updated."
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /courses/1 or /courses/1.json
   def destroy
     @course.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to courses_path, status: :see_other, notice: "Course was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to courses_path, status: :see_other, notice: "Course was successfully destroyed."
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
-      @course = Course.find(params.expect(:id))
+      @course = Course.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def course_params
-      params.expect(course: [ :coding_class_id, :trimester_id, :max_enrollment ])
+      params.require(:course).permit(:coding_class_id, :trimester_id, :max_enrollment)
     end
 
     # checks if a course is part of the current trimester
     # returns true if today's date fall between the start and end date
     def current_course?(course)
       t = course.trimester
+      return false if t.nil?
       today = Date.today
-      t.start_date <= today && t.end_date >= today
+      t.start_date <= today && today <= t.end_date
     end
 end
