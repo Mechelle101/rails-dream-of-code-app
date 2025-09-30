@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   resources :lessons
   resources :coding_classes
 
+  get 'login', to: 'sessions#new'
+  get 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+
+  post 'login', to: 'sessions#create'
+
   get "up" => "rails/health#show", as: :rails_health_check
   root "home#index"
 
