@@ -1,4 +1,13 @@
 class SubmissionsController < ApplicationController
+  before_action :set_course, only: [:new, :create, :edit, :update]
+
+  # student can create submissions
+  before_action :require_login, only: [:new, :create, :edit, :update]
+  before_action :require_student, only: [:new, :create]
+
+  # mentor can edit/update submissions
+  before_action :require_mentor, only: [:edit, :update]
+
   # GET /courses/:course_id/submissions/new
   def new
     @course = Course.find(params[:course_id])
@@ -36,6 +45,11 @@ class SubmissionsController < ApplicationController
   end
 
   private
+
+    def set_course
+      @course = Course.find(params[:course_id])
+    end
+
     # Only allow a list of trusted parameters through.
     def submission_params
       params.require(:submission).permit(:lesson_id, :enrollment_id, :mentor_id, :review_result, :reviewed_at)
